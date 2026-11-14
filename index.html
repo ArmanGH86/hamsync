@@ -55,6 +55,19 @@ summary{cursor:pointer;font-weight:700;padding:14px 0}
 details ol,details ul{margin:0 0 16px;padding-inline-start:22px;color:var(--muted)}
 details li{margin-bottom:6px}details p{color:var(--muted);margin:0 0 14px}
 code{font:13px ui-monospace,Consolas,monospace;background:var(--soft);padding:2px 6px;border-radius:5px;direction:ltr;unicode-bidi:embed}
+.walk{display:grid;gap:14px;margin-bottom:22px}
+.step{display:grid;grid-template-columns:44px 1fr;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.step .num{margin:0;width:36px;height:36px;font-size:16px}
+.step h3{margin:2px 0 6px;font-size:17px}.step p{margin:0 0 8px;color:var(--muted)}.step p:last-child{margin-bottom:0}
+.shots{display:grid;grid-template-columns:minmax(200px,300px) minmax(0,1fr);gap:14px;margin:6px 0 22px;align-items:start}
+.shots .wide{display:grid;gap:14px}
+@media (max-width:700px){.shots{grid-template-columns:1fr}}
+figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px}
+figure img{display:block;width:100%;height:auto;border-radius:8px}
+figcaption{font-size:13px;color:var(--muted);padding:8px 4px 2px}
+.who{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-bottom:22px}
+.who .card>b{display:block;margin-bottom:4px}
+h3.sec{font-size:19px;margin:26px 0 12px}
 footer{padding:30px 0 50px;color:var(--muted);font-size:14px;border-top:1px solid var(--line);margin-top:20px}
 @media (max-width:760px){.hero{grid-template-columns:1fr;padding-top:24px}}
 </style>
@@ -162,7 +175,70 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;border-top:1px soli
   <h2><span data-l="en">Using HamSync</span><span data-l="fa">آموزش استفاده</span></h2>
   <p class="sub"><span data-l="en">The app also shows a short tutorial the first time you open it.</span><span data-l="fa">خود برنامه هم بار اول یک آموزش کوتاه نشان می‌دهد.</span></p>
 
-  <details open><summary><span data-l="en">1. Create your account</span><span data-l="fa">۱. ساخت حساب</span></summary>
+  <h3 class="sec"><span data-l="en">A movie night, step by step</span><span data-l="fa">یک شب فیلم، قدم‌به‌قدم</span></h3>
+  <div class="walk">
+    <div class="step"><div class="num">1</div><div>
+      <h3><span data-l="en">Everyone installs HamSync once</span><span data-l="fa">همه یک بار هم‌سینک را نصب می‌کنند</span></h3>
+      <p data-l="en">Watching in a browser (YouTube, a streaming site)? Install the <b>extension</b>. Watching a downloaded file? Install the <b>app</b> for your computer or phone. You can have both.</p>
+      <p data-l="fa">در مرورگر تماشا می‌کنید (یوتیوب، سایت پخش آنلاین)؟ <b>افزونه</b> را نصب کنید. فایل دانلودشده دارید؟ <b>برنامه</b>‌ی رایانه یا گوشی را نصب کنید. می‌توانید هر دو را داشته باشید.</p>
+    </div></div>
+    <div class="step"><div class="num">2</div><div>
+      <h3><span data-l="en">Create an account</span><span data-l="fa">حساب بسازید</span></h3>
+      <p data-l="en">Open HamSync, go through the short introduction, press <b>I need an account</b>, choose a username and a password. Next time you only log in.</p>
+      <p data-l="fa">هم‌سینک را باز کنید، معرفی کوتاه را رد کنید، <b>حساب ندارم</b> را بزنید و نام کاربری و رمز انتخاب کنید. دفعه‌های بعد فقط وارد می‌شوید.</p>
+    </div></div>
+    <div class="step"><div class="num">3</div><div>
+      <h3><span data-l="en">One person creates the room</span><span data-l="fa">یک نفر اتاق می‌سازد</span></h3>
+      <p data-l="en">Press <b>Create a room</b>. A code like <code>K7M2QX</code> appears at the top — tap the copy icon and send it to your friends in any messenger. You are now the <b>host</b>: the time of everyone follows yours.</p>
+      <p data-l="fa"><b>ساخت اتاق</b> را بزنید. کدی مثل <code>K7M2QX</code> بالای صفحه می‌آید — روی آیکون کپی بزنید و در هر پیام‌رسانی برای دوستانتان بفرستید. حالا شما <b>میزبان</b> هستید: زمان همه از شما پیروی می‌کند.</p>
+    </div></div>
+    <div class="step"><div class="num">4</div><div>
+      <h3><span data-l="en">Friends join with the code</span><span data-l="fa">دوستان با کد وارد می‌شوند</span></h3>
+      <p data-l="en">They type the code under <b>Join a room</b> and press <b>Join</b>. Under “People” you see who is in and whether they are <b>ready</b>.</p>
+      <p data-l="fa">کد را در بخش <b>ورود به اتاق</b> وارد می‌کنند و <b>ورود</b> را می‌زنند. در بخش «اعضا» می‌بینید چه کسانی آمده‌اند و آیا <b>آماده</b> هستند.</p>
+    </div></div>
+    <div class="step"><div class="num">5</div><div>
+      <h3><span data-l="en">Everyone opens the film their own way</span><span data-l="fa">هرکس فیلم را به روش خودش باز می‌کند</span></h3>
+      <p data-l="en">The host starts the film first. The others open <b>the same film</b> — on a website, from a file, in VLC. As soon as HamSync sees a media with the same length, “My media” turns green: <b>In sync</b>.</p>
+      <p data-l="fa">اول میزبان فیلم را شروع می‌کند. بقیه <b>همان فیلم</b> را باز می‌کنند — در سایت، از روی فایل، در VLC. همین که هم‌سینک رسانه‌ای با همان طول ببیند، «رسانه‌ی من» سبز می‌شود: <b>هماهنگ</b>.</p>
+    </div></div>
+    <div class="step"><div class="num">6</div><div>
+      <h3><span data-l="en">Watch — and pause together</span><span data-l="fa">تماشا کنید — و با هم توقف کنید</span></h3>
+      <p data-l="en">Need a break? Just pause your own player: it pauses for everyone. Press play and everyone continues from the same moment. Jumping back to rewatch a scene works the same way.</p>
+      <p data-l="fa">استراحت می‌خواهید؟ فقط پلیر خودتان را متوقف کنید: برای همه متوقف می‌شود. پخش را بزنید و همه از همان لحظه ادامه می‌دهند. برگشتن به عقب برای دیدن دوباره‌ی یک صحنه هم همین‌طور است.</p>
+    </div></div>
+  </div>
+
+  <div class="shots">
+    <figure><img src="img/room-extension.png" alt="" loading="lazy" width="370" height="817">
+      <figcaption><span data-l="en">The extension in the browser: room code, Sync switch, what is playing, the detected video, who is ready.</span><span data-l="fa">افزونه در مرورگر: کد اتاق، کلید همگام‌سازی، آنچه پخش می‌شود، ویدیوی پیداشده و اعضای آماده.</span></figcaption></figure>
+    <div class="wide">
+    <figure><img src="img/room-desktop.png" alt="" loading="lazy" width="1458" height="929">
+      <figcaption><span data-l="en">The desktop app: open a file, or play it in VLC / mpv.</span><span data-l="fa">برنامه‌ی دسکتاپ: باز کردن فایل، یا پخش در VLC / mpv.</span></figcaption></figure>
+    <figure><img src="img/room-app-fa.png" alt="" loading="lazy" width="1100" height="800">
+      <figcaption><span data-l="en">The same kind of room in Persian, with a file that has a completely different name.</span><span data-l="fa">اتاق به زبان فارسی، با فایلی که اسمش کاملاً فرق دارد.</span></figcaption></figure>
+    </div>
+  </div>
+
+  <h3 class="sec"><span data-l="en">Where is my film? Pick your case</span><span data-l="fa">فیلم من کجاست؟ حالت خودتان را پیدا کنید</span></h3>
+  <div class="who">
+    <div class="card"><b><span data-l="en">On YouTube or another website</span><span data-l="fa">در یوتیوب یا سایت دیگر</span></b>
+      <p data-l="en">Join the room from the extension icon, then open the page and leave it open. If the video does not start by itself, click once on the page.</p>
+      <p data-l="fa">از آیکون افزونه وارد اتاق شوید، بعد صفحه را باز کنید و باز بگذارید. اگر ویدیو خودش شروع نشد، یک بار روی صفحه کلیک کنید.</p></div>
+    <div class="card"><b><span data-l="en">A downloaded file (mp4, mp3…)</span><span data-l="fa">فایل دانلودشده (mp4، mp3 و…)</span></b>
+      <p data-l="en">In the app, inside the room, press <b>Open a file</b> and choose it. It plays right there.</p>
+      <p data-l="fa">در برنامه، داخل اتاق، <b>باز کردن فایل</b> را بزنید و فایل را انتخاب کنید. همان‌جا پخش می‌شود.</p></div>
+    <div class="card"><b><span data-l="en">A file the app cannot play (mkv…)</span><span data-l="fa">فایلی که برنامه پخش نمی‌کند (mkv و…)</span></b>
+      <p data-l="en">Install VLC, then in the desktop app press <b>Play in VLC</b> and choose the file. HamSync opens VLC and keeps it in sync.</p>
+      <p data-l="fa">VLC را نصب کنید، بعد در برنامه‌ی دسکتاپ <b>پخش در VLC</b> را بزنید و فایل را انتخاب کنید. هم‌سینک VLC را باز می‌کند و هماهنگ نگهش می‌دارد.</p></div>
+    <div class="card"><b><span data-l="en">On a phone</span><span data-l="fa">روی گوشی</span></b>
+      <p data-l="en">Use the HamSync app and <b>Open a file</b> (or <b>Open a link</b> for a direct video link). Other apps on the phone cannot be controlled.</p>
+      <p data-l="fa">از برنامه‌ی هم‌سینک و <b>باز کردن فایل</b> استفاده کنید (یا <b>باز کردن لینک</b> برای لینک مستقیم ویدیو). برنامه‌های دیگر گوشی قابل کنترل نیستند.</p></div>
+  </div>
+
+  <h3 class="sec"><span data-l="en">More detail</span><span data-l="fa">جزئیات بیشتر</span></h3>
+
+  <details><summary><span data-l="en">1. Create your account</span><span data-l="fa">۱. ساخت حساب</span></summary>
     <p data-l="en">Open HamSync (the app, or the extension icon in your browser), choose <b>Create account</b> and pick a username and password. The same account works on all your devices.</p>
     <p data-l="fa">هم‌سینک را باز کنید (برنامه یا آیکون افزونه در مرورگر)، <b>ساخت حساب</b> را بزنید و نام کاربری و رمز انتخاب کنید. همین حساب روی همه‌ی دستگاه‌هایتان کار می‌کند.</p>
   </details>
@@ -194,6 +270,9 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;border-top:1px soli
       <li><b>My copy has a different intro / cut.</b> Open “My time offset” in the room and enter the difference in seconds.</li>
       <li><b>An advert is playing on YouTube.</b> HamSync waits and catches up when the advert ends.</li>
       <li><b>Play does not start in a browser tab.</b> Browsers block autoplay on pages you have not touched: click once anywhere on that page.</li>
+      <li><b>It says “no media yet” for me.</b> Your film must have the same length as the host has. If your copy is a different version, press <b>Use this</b> next to it under “My media”.</li>
+      <li><b>I want to stop following for a moment.</b> Switch <b>Sync</b> off; switch it on again and you jump back to where the others are.</li>
+      <li><b>The room code no longer works.</b> A room is removed 30 minutes after the last person leaves — create a new one.</li>
       <li><b>Sites with strict copy protection</b> (for example Netflix) may refuse time jumps made by extensions; play and pause still work.</li>
     </ul>
     <ul data-l="fa">
@@ -201,6 +280,9 @@ footer{padding:30px 0 50px;color:var(--muted);font-size:14px;border-top:1px soli
       <li><b>نسخه‌ی من تیتراژ یا تدوین متفاوتی دارد.</b> در اتاق «اختلاف زمان من» را باز کنید و تفاوت را به ثانیه وارد کنید.</li>
       <li><b>در یوتیوب تبلیغ پخش می‌شود.</b> هم‌سینک صبر می‌کند و بعد از تبلیغ خودش را می‌رساند.</li>
       <li><b>پخش در تب مرورگر شروع نمی‌شود.</b> مرورگرها پخش خودکار را در صفحه‌ای که لمس نشده مسدود می‌کنند: یک بار جایی از آن صفحه کلیک کنید.</li>
+      <li><b>برای من «هنوز رسانه‌ای ندارد» می‌نویسد.</b> طول فیلم شما باید با فیلم میزبان یکی باشد. اگر نسخه‌ی شما فرق دارد، در «رسانه‌ی من» کنار آن <b>همین را هماهنگ کن</b> را بزنید.</li>
+      <li><b>می‌خواهم چند لحظه مستقل باشم.</b> کلید <b>همگام‌سازی</b> را خاموش کنید؛ دوباره که روشن کنید به جایی که بقیه هستند می‌پرید.</li>
+      <li><b>کد اتاق دیگر کار نمی‌کند.</b> اتاق ۳۰ دقیقه بعد از خروج آخرین نفر حذف می‌شود — یک اتاق جدید بسازید.</li>
       <li><b>سایت‌های با محافظت کپی سخت‌گیرانه</b> (مثل Netflix) ممکن است جابه‌جایی زمان توسط افزونه را قبول نکنند؛ پخش و توقف همچنان کار می‌کند.</li>
     </ul>
   </details>
