@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>HamSync — watch together, each on your own device</title>
+<meta name="description" content="Watch films and listen to music in sync with friends. Everyone plays their own copy — YouTube, any website, downloaded files, VLC — and HamSync keeps play, pause and time identical.">
+<style>
+:root{--bg:#f4f2ee;--card:#fff;--line:#e2ded6;--text:#1c1b19;--muted:#6b675f;--accent:#f2a922;--accent-text:#241a02;--soft:#ece8e0;--ok:#1f8a4c}
+@media (prefers-color-scheme:dark){:root{--bg:#131417;--card:#1c1e23;--line:#2c2f37;--text:#f1efea;--muted:#9a978f;--accent:#f5b83d;--soft:#262930;--ok:#4cc47f}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 "Segoe UI",system-ui,-apple-system,"Vazirmatn",Tahoma,sans-serif}
+html[lang=en] [data-l=fa],html[lang=fa] [data-l=en]{display:none!important}
+a{color:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{display:flex;align-items:center;justify-content:space-between;padding:18px 0;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;text-decoration:none}
+.logo{width:34px;height:34px;border-radius:10px;background:var(--accent);position:relative;flex:none}
+.logo::before,.logo::after{content:"";position:absolute;top:9px;width:6px;height:16px;border-radius:2px;background:var(--accent-text)}
+.logo::before{left:9px}.logo::after{right:9px}
+.lang{display:flex;background:var(--soft);border-radius:10px;padding:3px;gap:3px}
+.lang button{border:0;background:none;color:var(--muted);font:inherit;font-size:14px;font-weight:600;padding:5px 12px;border-radius:8px;cursor:pointer}
+.lang button[aria-pressed=true]{background:var(--card);color:var(--text)}
+.hero{padding:48px 0 36px;display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center}
+h1{font-size:clamp(32px,5.2vw,52px);line-height:1.12;margin:0 0 16px;letter-spacing:-.02em;text-wrap:balance}
+html[lang=fa] h1{letter-spacing:0;line-height:1.4}
+.lead{font-size:18px;color:var(--muted);margin:0 0 24px;max-width:34em;text-wrap:pretty}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-text);font-weight:700;text-decoration:none;padding:13px 22px;border-radius:12px;border:1px solid var(--accent)}
+.btn.sec{background:transparent;color:var(--text);border-color:var(--line)}
+.btn:hover{filter:brightness(.96)}
+.cta{display:flex;flex-wrap:wrap;gap:10px}
+.small{font-size:13px;color:var(--muted)}
+/* hero illustration: three devices, one timeline */
+.devices{display:grid;gap:12px}
+.dev{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.dev b{display:block;font-size:14px}.dev span{font-size:12px;color:var(--muted)}
+.tl{height:6px;border-radius:3px;background:var(--soft);margin-top:10px;position:relative;overflow:hidden;direction:ltr}
+.tl i{position:absolute;inset:0 auto 0 0;width:42%;background:var(--accent);border-radius:3px;animation:run 14s linear infinite}
+@keyframes run{from{width:8%}to{width:96%}}
+@media (prefers-reduced-motion:reduce){.tl i{animation:none}}
+section{padding:36px 0}
+h2{font-size:26px;margin:0 0 6px;letter-spacing:-.01em}html[lang=fa] h2{letter-spacing:0}
+.sub{color:var(--muted);margin:0 0 22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.card h3{margin:0 0 6px;font-size:17px}.card p{margin:0;color:var(--muted);font-size:15px}
+.num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--accent-text);font-weight:700;font-size:14px;margin-bottom:10px}
+.dl{display:flex;flex-direction:column;gap:8px}
+.dl a.btn{justify-content:center;padding:10px 14px;font-size:15px}
+.dl .mine{outline:2px solid var(--accent);outline-offset:3px}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0 18px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:700;padding:14px 0}
+details ol,details ul{margin:0 0 16px;padding-inline-start:22px;color:var(--muted)}
+details li{margin-bottom:6px}details p{color:var(--muted);margin:0 0 14px}
+code{font:13px ui-monospace,Consolas,monospace;background:var(--soft);padding:2px 6px;border-radius:5px;direction:ltr;unicode-bidi:embed}
+footer{padding:30px 0 50px;color:var(--muted);font-size:14px;border-top:1px solid var(--line);margin-top:20px}
+@media (max-width:760px){.hero{grid-template-columns:1fr;padding-top:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="brand" href="#"><span class="logo"></span><span data-l="en">HamSync</span><span data-l="fa">هم‌سینک</span></a>
+  <div class="lang" role="group" aria-label="Language">
+    <button type="button" data-set="en" aria-pressed="true">English</button>
+    <button type="button" data-set="fa" aria-pressed="false">فارسی</button>
+  </div>
+</header>
+
+<div class="hero">
+  <div>
+    <h1><span data-l="en">Watch together, each on your own device.</span><span data-l="fa">با هم تماشا کنید، هرکس روی دستگاه خودش.</span></h1>
+    <p class="lead">
+      <span data-l="en">Everyone plays their own copy — YouTube or any website, a downloaded file, VLC — and HamSync keeps play, pause and the exact time identical for the whole group. Nothing is streamed, so quality stays perfect.</span>
+      <span data-l="fa">هرکس نسخه‌ی خودش را پخش می‌کند — یوتیوب یا هر سایت دیگر، فایل دانلودشده، VLC — و هم‌سینک پخش، توقف و زمان دقیق را برای کل گروه یکسان نگه می‌دارد. هیچ چیزی استریم نمی‌شود، پس کیفیت دست‌نخورده می‌ماند.</span>
+    </p>
+    <div class="cta">
+      <a class="btn" id="mainDl" href="#download"><span data-l="en">Download</span><span data-l="fa">دانلود</span><span id="mainOs"></span></a>
+      <a class="btn sec" href="#guide"><span data-l="en">How to use it</span><span data-l="fa">آموزش استفاده</span></a>
+    </div>
+    <p class="small" style="margin-top:14px">
+      <span data-l="en">Windows · macOS · Linux · Android · iOS · Chrome · Firefox — free.</span>
+      <span data-l="fa">ویندوز · مک · لینوکس · اندروید · iOS · کروم · فایرفاکس — رایگان.</span>
+    </p>
+  </div>
+  <div class="devices" aria-hidden="true">
+    <div class="dev"><b>Chrome — YouTube</b><span>Sara</span><div class="tl"><i></i></div></div>
+    <div class="dev"><b>VLC — movie.1080p.mkv</b><span>Ali</span><div class="tl"><i></i></div></div>
+    <div class="dev"><b>Android — film-final.mp4</b><span>Mina</span><div class="tl"><i></i></div></div>
+  </div>
+</div>
+
+<section>
+  <h2><span data-l="en">How it works</span><span data-l="fa">چطور کار می‌کند</span></h2>
+  <p class="sub"><span data-l="en">Three steps, about a minute.</span><span data-l="fa">سه قدم، حدود یک دقیقه.</span></p>
+  <div class="grid">
+    <div class="card"><div class="num">1</div>
+      <h3><span data-l="en">Create a room</span><span data-l="fa">اتاق بسازید</span></h3>
+      <p><span data-l="en">One person creates a room and gets a 6‑letter code.</span><span data-l="fa">یک نفر اتاق می‌سازد و یک کد ۶ حرفی می‌گیرد.</span></p></div>
+    <div class="card"><div class="num">2</div>
+      <h3><span data-l="en">Friends join</span><span data-l="fa">دوستان وارد می‌شوند</span></h3>
+      <p><span data-l="en">Everyone else enters the code — from the app or the browser extension.</span><span data-l="fa">بقیه کد را وارد می‌کنند — از داخل برنامه یا افزونه‌ی مرورگر.</span></p></div>
+    <div class="card"><div class="num">3</div>
+      <h3><span data-l="en">Press play</span><span data-l="fa">پخش را بزنید</span></h3>
+      <p><span data-l="en">Each person opens the same film or song. HamSync recognises it by its length — file names don't matter — and keeps everyone on the room creator's time. If anyone pauses, it pauses for all.</span><span data-l="fa">هرکس همان فیلم یا آهنگ را باز می‌کند. هم‌سینک آن را از روی طول زمانش می‌شناسد — اسم فایل مهم نیست — و همه را روی زمان سازنده‌ی اتاق نگه می‌دارد. هرکس توقف بزند، برای همه متوقف می‌شود.</span></p></div>
+  </div>
+</section>
+
+<section id="download">
+  <h2><span data-l="en">Download</span><span data-l="fa">دانلود</span></h2>
+  <p class="sub"><span data-l="en">Always the latest version.</span><span data-l="fa">همیشه آخرین نسخه.</span> <a id="allRel" href="#"><span data-l="en">All releases</span><span data-l="fa">همه‌ی نسخه‌ها</span></a></p>
+  <div class="grid">
+    <div class="card dl" data-os="windows"><h3>Windows</h3><a class="btn" data-file="HamSync-Setup.exe" href="#">HamSync-Setup.exe</a></div>
+    <div class="card dl" data-os="mac"><h3>macOS</h3><a class="btn" data-file="HamSync-mac.dmg" href="#">HamSync-mac.dmg</a></div>
+    <div class="card dl" data-os="linux"><h3>Linux</h3><a class="btn" data-file="HamSync-linux.AppImage" href="#">AppImage</a><a class="btn sec" data-file="HamSync-linux.deb" href="#">.deb (Debian / Ubuntu)</a></div>
+    <div class="card dl" data-os="android"><h3>Android</h3><a class="btn" data-file="HamSync.apk" href="#">HamSync.apk</a></div>
+    <div class="card dl" data-os="ios"><h3>iPhone / iPad</h3><a class="btn" data-file="HamSync.ipa" href="#">HamSync.ipa</a></div>
+    <div class="card dl"><h3><span data-l="en">Browser extension</span><span data-l="fa">افزونه‌ی مرورگر</span></h3>
+      <a class="btn" data-file="hamsync-chrome.zip" href="#">Chrome · Edge · Brave</a><a class="btn sec" data-file="hamsync-firefox.zip" href="#">Firefox</a></div>
+  </div>
+</section>
+
+<section id="install">
+  <h2><span data-l="en">Installing</span><span data-l="fa">نصب</span></h2>
+  <p class="sub"><span data-l="en">Pick your platform.</span><span data-l="fa">پلتفرم خود را انتخاب کنید.</span></p>
+
+  <details data-os="windows"><summary>Windows</summary>
+    <ol data-l="en"><li>Run <code>HamSync-Setup.exe</code>.</li><li>If Windows shows “Windows protected your PC”, click <b>More info → Run anyway</b> (the installer is not code‑signed).</li><li>HamSync opens and walks you through the first steps.</li></ol>
+    <ol data-l="fa"><li>فایل <code>HamSync-Setup.exe</code> را اجرا کنید.</li><li>اگر ویندوز پیام «Windows protected your PC» داد، روی <b>More info ← Run anyway</b> بزنید (نصب‌کننده امضای دیجیتال ندارد).</li><li>هم‌سینک باز می‌شود و قدم‌های اول را نشانتان می‌دهد.</li></ol>
+  </details>
+  <details data-os="mac"><summary>macOS</summary>
+    <ol data-l="en"><li>Open <code>HamSync-mac.dmg</code> and drag HamSync to Applications.</li><li>The first time, right‑click the app → <b>Open</b>. On newer macOS: System Settings → Privacy &amp; Security → <b>Open Anyway</b>.</li></ol>
+    <ol data-l="fa"><li><code>HamSync-mac.dmg</code> را باز کنید و HamSync را به Applications بکشید.</li><li>بار اول روی برنامه راست‌کلیک ← <b>Open</b>. در macOS جدید: System Settings ← Privacy &amp; Security ← <b>Open Anyway</b>.</li></ol>
+  </details>
+  <details data-os="linux"><summary>Linux</summary>
+    <ul data-l="en"><li>AppImage: <code>chmod +x HamSync-linux.AppImage</code> then run it.</li><li>Debian / Ubuntu: <code>sudo apt install ./HamSync-linux.deb</code></li></ul>
+    <ul data-l="fa"><li>AppImage: دستور <code>chmod +x HamSync-linux.AppImage</code> و سپس اجرا.</li><li>دبیان / اوبونتو: <code>sudo apt install ./HamSync-linux.deb</code></li></ul>
+  </details>
+  <details data-os="android"><summary>Android</summary>
+    <ol data-l="en"><li>Download <code>HamSync.apk</code> and open it.</li><li>Allow your browser to “install unknown apps” when asked.</li></ol>
+    <ol data-l="fa"><li><code>HamSync.apk</code> را دانلود و باز کنید.</li><li>وقتی پرسید، اجازه‌ی «نصب برنامه‌های ناشناس» را به مرورگر بدهید.</li></ol>
+  </details>
+  <details data-os="ios"><summary>iPhone / iPad</summary>
+    <p data-l="en">Apple only allows installing apps outside the App Store if you sign them with your own Apple ID:</p>
+    <ol data-l="en"><li>Install <b>Sideloadly</b> or <b>AltStore</b> on a computer.</li><li>Connect your iPhone, choose <code>HamSync.ipa</code> and sign in with your Apple ID.</li><li>On the phone: Settings → General → VPN &amp; Device Management → trust your Apple ID. With a free Apple ID this must be repeated every 7 days.</li></ol>
+    <p data-l="fa">اپل نصب برنامه خارج از App Store را فقط با امضای Apple ID خودتان اجازه می‌دهد:</p>
+    <ol data-l="fa"><li>روی رایانه <b>Sideloadly</b> یا <b>AltStore</b> را نصب کنید.</li><li>آیفون را وصل کنید، <code>HamSync.ipa</code> را انتخاب و با Apple ID وارد شوید.</li><li>روی گوشی: Settings ← General ← VPN &amp; Device Management ← به Apple ID خود اعتماد کنید. با Apple ID رایگان این کار هر ۷ روز باید تکرار شود.</li></ol>
+  </details>
+  <details><summary>Chrome · Edge · Brave · Opera</summary>
+    <ol data-l="en"><li>Unzip <code>hamsync-chrome.zip</code> into a folder you will keep.</li><li>Open <code>chrome://extensions</code> and switch on <b>Developer mode</b> (top right).</li><li>Click <b>Load unpacked</b> and choose that folder.</li><li>Pin HamSync to the toolbar. To sync files opened directly in the browser (<code>file://</code>), open the extension's Details and enable <b>Allow access to file URLs</b>.</li></ol>
+    <ol data-l="fa"><li><code>hamsync-chrome.zip</code> را در پوشه‌ای که نگهش می‌دارید از حالت فشرده خارج کنید.</li><li><code>chrome://extensions</code> را باز و <b>Developer mode</b> (بالا سمت راست) را روشن کنید.</li><li>روی <b>Load unpacked</b> بزنید و همان پوشه را انتخاب کنید.</li><li>هم‌سینک را به نوار ابزار سنجاق کنید. برای همگام‌سازی فایل‌هایی که مستقیم در مرورگر باز می‌کنید (<code>file://</code>)، در Details افزونه گزینه‌ی <b>Allow access to file URLs</b> را روشن کنید.</li></ol>
+  </details>
+  <details><summary>Firefox</summary>
+    <ol data-l="en"><li>Open <code>about:debugging#/runtime/this-firefox</code>.</li><li>Click <b>Load Temporary Add-on…</b> and choose <code>hamsync-firefox.zip</code>.</li><li>A temporary add-on is removed when Firefox closes — load it again next time. (Firefox Developer Edition and Nightly can install it permanently after setting <code>xpinstall.signatures.required</code> to <code>false</code> in <code>about:config</code>.)</li></ol>
+    <ol data-l="fa"><li><code>about:debugging#/runtime/this-firefox</code> را باز کنید.</li><li>روی <b>Load Temporary Add-on…</b> بزنید و <code>hamsync-firefox.zip</code> را انتخاب کنید.</li><li>افزونه‌ی موقت با بستن فایرفاکس حذف می‌شود — دفعه‌ی بعد دوباره بارگذاری کنید. (در Firefox Developer Edition و Nightly با گذاشتن <code>xpinstall.signatures.required</code> روی <code>false</code> در <code>about:config</code> نصب دائمی ممکن است.)</li></ol>
+  </details>
+</section>
+
+<section id="guide">
+  <h2><span data-l="en">Using HamSync</span><span data-l="fa">آموزش استفاده</span></h2>
+  <p class="sub"><span data-l="en">The app also shows a short tutorial the first time you open it.</span><span data-l="fa">خود برنامه هم بار اول یک آموزش کوتاه نشان می‌دهد.</span></p>
+
+  <details open><summary><span data-l="en">1. Create your account</span><span data-l="fa">۱. ساخت حساب</span></summary>
+    <p data-l="en">Open HamSync (the app, or the extension icon in your browser), choose <b>Create account</b> and pick a username and password. The same account works on all your devices.</p>
+    <p data-l="fa">هم‌سینک را باز کنید (برنامه یا آیکون افزونه در مرورگر)، <b>ساخت حساب</b> را بزنید و نام کاربری و رمز انتخاب کنید. همین حساب روی همه‌ی دستگاه‌هایتان کار می‌کند.</p>
+  </details>
+  <details><summary><span data-l="en">2. Create or join a room</span><span data-l="fa">۲. ساخت اتاق یا ورود به آن</span></summary>
+    <p data-l="en"><b>Create a room</b> makes you the host and shows a code such as <code>K7M2QX</code>. Send it to your friends; they type it under <b>Join a room</b>. Everybody's time follows the host.</p>
+    <p data-l="fa"><b>ساخت اتاق</b> شما را میزبان می‌کند و کدی مثل <code>K7M2QX</code> نشان می‌دهد. آن را برای دوستانتان بفرستید؛ آن‌ها کد را در <b>ورود به اتاق</b> وارد می‌کنند. زمان همه از میزبان پیروی می‌کند.</p>
+  </details>
+  <details><summary><span data-l="en">3. Open your media — any of these, in any mix</span><span data-l="fa">۳. رسانه را باز کنید — هرکدام، با هر ترکیبی</span></summary>
+    <ul data-l="en">
+      <li><b>In a browser</b> (YouTube, streaming sites, any page with a video or audio player): just open the page. The extension finds the player by itself.</li>
+      <li><b>A file on your computer or phone</b>: in the HamSync app press <b>Open a file</b>.</li>
+      <li><b>VLC or mpv</b> (for formats the built‑in player cannot play): in the desktop app press <b>Play in VLC</b> / <b>Play in mpv</b>.</li>
+    </ul>
+    <p data-l="en">One person can watch online in Firefox, another in Chrome and a third from a downloaded file — they stay together. HamSync only touches the media that belongs to the room: it recognises it by its <b>length</b>, so different file names are no problem. If it picks the wrong one, press <b>Use this</b> next to the right one under “My media”.</p>
+    <ul data-l="fa">
+      <li><b>در مرورگر</b> (یوتیوب، سایت‌های پخش آنلاین، هر صفحه‌ای که پلیر ویدیو یا صدا دارد): فقط صفحه را باز کنید. افزونه خودش پلیر را پیدا می‌کند.</li>
+      <li><b>فایل روی رایانه یا گوشی</b>: در برنامه‌ی هم‌سینک <b>باز کردن فایل</b> را بزنید.</li>
+      <li><b>VLC یا mpv</b> (برای فرمت‌هایی که پلیر داخلی پخش نمی‌کند): در برنامه‌ی دسکتاپ <b>پخش در VLC</b> / <b>پخش در mpv</b> را بزنید.</li>
+    </ul>
+    <p data-l="fa">یک نفر می‌تواند آنلاین در فایرفاکس ببیند، دیگری در کروم و سومی از روی فایل دانلودشده — همه با هم می‌مانند. هم‌سینک فقط به رسانه‌ی مربوط به اتاق دست می‌زند: آن را از روی <b>طول زمانش</b> می‌شناسد، پس تفاوت اسم فایل‌ها مشکلی نیست. اگر اشتباه انتخاب کرد، در بخش «رسانه‌ی من» کنار مورد درست <b>همین را هماهنگ کن</b> را بزنید.</p>
+  </details>
+  <details><summary><span data-l="en">4. Play, pause, seek — for everyone</span><span data-l="fa">۴. پخش، توقف، جابه‌جایی — برای همه</span></summary>
+    <p data-l="en">Use your player as usual. When anyone pauses, plays or jumps to another time, the same happens for the whole room. The host can switch off <b>Everyone can play / pause / seek</b> to keep control. The <b>Sync</b> switch turns HamSync off and on for your device without leaving the room.</p>
+    <p data-l="fa">از پلیر خود مثل همیشه استفاده کنید. هرکس توقف، پخش یا جابه‌جا کند، برای کل اتاق همان اتفاق می‌افتد. میزبان می‌تواند <b>همه می‌توانند پخش / توقف / جابه‌جا کنند</b> را خاموش کند تا کنترل فقط دست خودش باشد. کلید <b>همگام‌سازی</b> هم‌سینک را برای دستگاه شما بدون خروج از اتاق خاموش و روشن می‌کند.</p>
+  </details>
+  <details><summary><span data-l="en">Questions</span><span data-l="fa">پرسش‌ها</span></summary>
+    <ul data-l="en">
+      <li><b>Is my screen or file sent to others?</b> No. Only play / pause and the current time are shared.</li>
+      <li><b>My copy has a different intro / cut.</b> Open “My time offset” in the room and enter the difference in seconds.</li>
+      <li><b>An advert is playing on YouTube.</b> HamSync waits and catches up when the advert ends.</li>
+      <li><b>Play does not start in a browser tab.</b> Browsers block autoplay on pages you have not touched: click once anywhere on that page.</li>
+      <li><b>Sites with strict copy protection</b> (for example Netflix) may refuse time jumps made by extensions; play and pause still work.</li>
+    </ul>
+    <ul data-l="fa">
+      <li><b>صفحه یا فایل من برای دیگران فرستاده می‌شود؟</b> نه. فقط پخش / توقف و زمان فعلی رد و بدل می‌شود.</li>
+      <li><b>نسخه‌ی من تیتراژ یا تدوین متفاوتی دارد.</b> در اتاق «اختلاف زمان من» را باز کنید و تفاوت را به ثانیه وارد کنید.</li>
+      <li><b>در یوتیوب تبلیغ پخش می‌شود.</b> هم‌سینک صبر می‌کند و بعد از تبلیغ خودش را می‌رساند.</li>
+      <li><b>پخش در تب مرورگر شروع نمی‌شود.</b> مرورگرها پخش خودکار را در صفحه‌ای که لمس نشده مسدود می‌کنند: یک بار جایی از آن صفحه کلیک کنید.</li>
+      <li><b>سایت‌های با محافظت کپی سخت‌گیرانه</b> (مثل Netflix) ممکن است جابه‌جایی زمان توسط افزونه را قبول نکنند؛ پخش و توقف همچنان کار می‌کند.</li>
+    </ul>
+  </details>
+</section>
+
+<footer>
+  <span data-l="en">HamSync — free to use. Downloads on this page are built automatically from the latest version.</span>
+  <span data-l="fa">هم‌سینک — رایگان. فایل‌های این صفحه به‌صورت خودکار از آخرین نسخه ساخته می‌شوند.</span>
+</footer>
+</div>
+
+<script>
+// Where the downloads live. On GitHub Pages (https://OWNER.github.io/REPO/) this is detected
+// automatically; set it by hand ("owner/repo") only if you host the page somewhere else.
+var REPO = '';
+(function () {
+  if (!REPO) {
+    var m = /^([^.]+)\.github\.io$/.exec(location.hostname);
+    var seg = location.pathname.split('/').filter(Boolean)[0];
+    if (m) REPO = m[1] + '/' + (seg || m[1] + '.github.io');
+  }
+  var base = REPO ? 'https://github.com/' + REPO + '/releases' : '';
+  document.querySelectorAll('a[data-file]').forEach(function (a) {
+    if (base) a.href = base + '/latest/download/' + a.getAttribute('data-file');
+  });
+  if (base) document.getElementById('allRel').href = base;
+
+  var ua = navigator.userAgent, os =
+    /Android/i.test(ua) ? 'android' : /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) ? 'ios' :
+    /Windows/i.test(ua) ? 'windows' : /Macintosh|Mac OS X/i.test(ua) ? 'mac' : /Linux|X11/i.test(ua) ? 'linux' : '';
+  var names = { windows: 'Windows', mac: 'macOS', linux: 'Linux', android: 'Android', ios: 'iOS' };
+  if (os) {
+    var card = document.querySelector('.dl[data-os="' + os + '"]');
+    if (card) {
+      card.classList.add('mine');
+      var first = card.querySelector('a[data-file]');
+      if (first && base) document.getElementById('mainDl').href = first.href;
+    }
+    document.getElementById('mainOs').textContent = ' — ' + names[os];
+    var d = document.querySelector('details[data-os="' + os + '"]');
+    if (d) d.open = true;
+  }
+
+  function setLang(l) {
+    document.documentElement.lang = l;
+    document.documentElement.dir = l === 'fa' ? 'rtl' : 'ltr';
+    document.querySelectorAll('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-set') === l)); });
+    try { localStorage.setItem('lang', l); } catch (e) {}
+  }
+  document.querySelectorAll('.lang button').forEach(function (b) { b.addEventListener('click', function () { setLang(b.getAttribute('data-set')); }); });
+  var saved = null;
+  try { saved = localStorage.getItem('lang'); } catch (e) {}
+  setLang(saved || (/^fa/i.test(navigator.language || '') ? 'fa' : 'en'));
+})();
+</script>
+</body>
+</html>
